@@ -1,9 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { selectJobListings, selectJobListingsLoading, selectJobListingsError } from './Redux/jobListing.selector';
 import { fetchJobListingsFailure, fetchJobListingsStart, fetchJobListingsSuccess } from './Redux/jobListing.slice';
 import './App.css';
 
+// Lazy load CardComponent and Filters
+const CardComponent = lazy(() => import('./card/CardComponent'));
 function App() {
+  const jobListings = useSelector(selectJobListings);
+  const loading = useSelector(selectJobListingsLoading);
+  const error = useSelector(selectJobListingsError);
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchJobListings = async () => {
@@ -31,7 +37,19 @@ function App() {
   }, [dispatch]);
   return (
     <div className="App">
-      <h1>Job Listings</h1>
+      <Suspense fallback={<div>Loading...</div>}>
+        {loading ? (
+          <div>Loading...</div>
+        ) : error ? (
+          <div>Error: {error.message}</div>
+        ) : (
+          <div className="card-container">
+            {jobListings.map((job) => (
+              <CardComponent key={job.jdUid} job={job} />
+            ))}
+          </div>
+        )}
+      </Suspense>
     </div>
   );
 }
