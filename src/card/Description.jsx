@@ -17,15 +17,16 @@ const Description = ({ aboutCompany, aboutRole }) => {
         setShowPopup(false);
       }
     };
-
+// on click of outside of popup close the popup
     window.addEventListener('mousedown', handleClickOutside);
-
+//cleanup function
     return () => {
       window.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
   useEffect(() => {
+    // show popup if description is more than 60 words
     const combinedDescription =
       aboutCompany + ' ' + aboutRole.map((item) => item.content).join(' ');
     setIsOverflowing(combinedDescription.split(' ').length > 60);

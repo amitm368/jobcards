@@ -34,15 +34,19 @@ const CardComponent = ({ job }) => {
           <div className="info-container">
             <h3>{job.companyName}</h3>
             <h4>{job.jobRole}</h4>
+            {/* capitalize first letter of job location */}
             <p>{job.location.charAt(0).toUpperCase() + job.location.slice(1)}</p>
           </div>
         </div>
+        {/* if salaryCurrencyCode is USD then show $ symbol otherwise show inr symbol */}
         <p className="card-salary">Estimated Salary: {job.salaryCurrencyCode === 'USD' ? `$${job.maxJdSalary}`: `${job.maxJdSalary}₹`} <span aria-label="Offered salary range" role="img">✅</span></p>
          <div className='job-description'>
+            {/* render description component */}
          <Description aboutCompany={aboutCompany} aboutRole={aboutRole} />
         </div> 
         <div className="minimum-exp">
           <p>Minimum Experience</p>
+          {/* if minExp is null show static message  */}
           <p>{job.minExp ? job.minExp : 'Min Experience not Available'}</p>
         </div>
       </div>

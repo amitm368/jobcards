@@ -7,6 +7,7 @@ import './App.css';
 // Lazy load CardComponent and Filters
 const CardComponent = lazy(() => import('./card/CardComponent'));
 function App() {
+  //subscribe and fetch data from store
   const jobListings = useSelector(selectJobListings);
   const loading = useSelector(selectJobListingsLoading);
   const error = useSelector(selectJobListingsError);
@@ -39,8 +40,10 @@ function App() {
     <div className="App">
       <Suspense fallback={<div>Loading...</div>}>
         {loading ? (
+          //Loading screen during data fetch
           <div>Loading...</div>
         ) : error ? (
+          // error screen if any error occured during data fetch
           <div>Error: {error.message}</div>
         ) : (
           <div className="card-container">
