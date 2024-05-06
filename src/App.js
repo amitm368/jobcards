@@ -1,23 +1,37 @@
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchJobListingsFailure, fetchJobListingsStart, fetchJobListingsSuccess } from './Redux/jobListing.slice';
 import './App.css';
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchJobListings = async () => {
+      //set loading state
+      dispatch(fetchJobListingsStart());
+      try {
+        const response = await fetch("https://api.weekday.technology/adhoc/getSampleJdJSON", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            limit: 12,
+            offset: 0
+          })
+        });
+        const data = await response.json();
+        //set data
+        dispatch(fetchJobListingsSuccess(data.jdList));
+      } catch (error) {
+        //set error state
+        dispatch(fetchJobListingsFailure(error));
+      }
+    };
+// call function to fetch data in initial render
+    fetchJobListings();
+  }, [dispatch]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Job Listings</h1>
     </div>
   );
 }
