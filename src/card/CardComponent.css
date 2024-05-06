@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend&display=swap');
 .card-body {
     max-width: 600px;
     margin: 40px auto;
@@ -73,9 +74,13 @@
   }
   
   .card-salary {
+   font-family: __LexendFont_7838d2, __LexendFont_Fallback_7838d2;
     margin-top: 10px;
     text-align: left;
-    font-weight: 600;
+    line-height: 20px;
+    Color: #4d596a;
+    font-size: 14px;
+    font-weight: 400;
   }
   
   .about-company p,
@@ -108,6 +113,27 @@
   
   .buttons button {
     margin-bottom: 10px;
+  }
+  .info-container {
+   text-align: left;
+   line-height: 1
+  }
+  .info-container>h3 {
+    font-family: __LexendFont_7838d2, __LexendFont_Fallback_7838d2;
+    line-height: 1;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+    color: #8b8b8b;
+  }
+  .info-container>h2 {
+    font-size: 14px;
+    line-height: 10;
+    font-family: __LexendFont_7838d2, __LexendFont_Fallback_7838d2;
+    color: rgba(0, 0, 0, 0.87);
+    font-weight: 400;
+    line-height: 21px;
   }
   
   .apply-btn,
