@@ -45,9 +45,9 @@ const CardComponent = ({ job }) => {
          <Description aboutCompany={aboutCompany} aboutRole={aboutRole} />
         </div> 
         <div className="minimum-exp">
-          <p>Minimum Experience</p>
+          <h1>Minimum Experience</h1>
           {/* if minExp is null show static message  */}
-          <p>{job.minExp ? job.minExp : 'Min Experience not Available'}</p>
+          <p>{job.minExp ? `${job.minExp} Years` : 'Min Experience not Available'}</p>
         </div>
       </div>
       <div className="status-container">
