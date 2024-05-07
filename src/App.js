@@ -58,7 +58,6 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Amit Mishra</h1>
       <Suspense fallback={<div>Loading...</div>}>
         <div className='filter-container'>
           <Filters

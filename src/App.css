@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  margin-top: 1.5rem;
 }
 
 .App-logo {
@@ -46,16 +47,3 @@
     width: 100%; /* Full width on smaller screens */
   }
 }
-
-/* .filter-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  width: auto;
-  height: ;
-  background-color: transparent;
-
-  padding: 0 20px 20px;
-  background-color: #aa0d0d !important;
-} */
