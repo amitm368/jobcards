@@ -3,7 +3,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Link to run the project 
-### `[https://joblistcards.netlify.app/](https://joblistcards.netlify.app/)`
+### `https://joblistcards.netlify.app/`
+ Click Here: [https://joblistcards.netlify.app/](https://joblistcards.netlify.app/)
 ## Available Scripts
 
 In the project directory, you can run:
