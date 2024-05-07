@@ -1,6 +1,28 @@
 import React from 'react';
-import Select from 'react-select';
+import Select, { components } from 'react-select';
+import { FiX } from 'react-icons/fi'; // Import the close icon
 import './Filter.css';
+
+const ClearIndicator = props => {
+  return (
+    <components.ClearIndicator {...props}>
+      <span>
+        <FiX />
+      </span>
+    </components.ClearIndicator>
+  );
+};
+
+const MultiValueLabel = props => {
+  return (
+    <components.MultiValueLabel {...props}>
+      {props.data.label}
+      <span className="remove-option" onClick={() => props.removeProps.onClick()}>
+        <FiX />
+      </span>
+    </components.MultiValueLabel>
+  );
+};
 
 const Filters = ({
   minExperience,
@@ -9,10 +31,6 @@ const Filters = ({
   setCompanyName,
   location,
   setLocation,
-  remote,
-  setRemote,
-  techStack,
-  setTechStack,
   role,
   setRole,
   minBasePay,
@@ -21,26 +39,26 @@ const Filters = ({
 
   const experienceOptions = [
     { value: '', label: 'Min Experience' },
-    { value: '0-1', label: '0-1 years' },
-    { value: '1-3', label: '1-3 years' },
-    { value: '3-5', label: '3-5 years' },
+    { value: '1', label: '1 years' },
+    { value: '3', label: '3 years' },
+    { value: '5', label: '5 years' },
     { value: '5+', label: '5+ years' }
   ];
 
   const locationOptions = [
     { value: '', label: 'Location' },
     { value: 'Mumbai', label: 'Mumbai' },
-    { value: 'Delhi ncr', label: 'Delhi ncr' },
+    { value: 'Delhi NCR', label: 'Delhi NCR' },
     { value: 'Chennai', label: 'Chennai' },
     { value: 'Bangalore', label: 'Bangalore' }
   ];
 
   const roleOptions = [
     { value: '', label: 'Roles' },
-    { value: 'ios', label: 'ios Developer' },
-    { value: 'android', label: 'android Developer' },
-    { value: 'frontend', label: 'frontend Developer' },
-    { value: 'backend', label: 'backend Developer' }
+    { value: 'ios', label: 'iOS Developer' },
+    { value: 'android', label: 'Android Developer' },
+    { value: 'frontend', label: 'Frontend Developer' },
+    { value: 'backend', label: 'Backend Developer' }
   ];
 
   const basePayOptions = [
@@ -48,8 +66,8 @@ const Filters = ({
     { value: '10', label: '$10' },
     { value: '50', label: '$50' },
     { value: '110', label: '$110' },
-    { value: '150', label: '150' },
-    { value: '200', label: '150+' }
+    { value: '150', label: '$150' },
+    { value: '150+', label: '$150+' }
   ];
 
   return (
@@ -58,10 +76,25 @@ const Filters = ({
         <Select
           className="select-box"
           classNamePrefix="select"
+          value={role}
+          onChange={setRole}
+          options={roleOptions}
+          placeholder="Roles"
+          components={{ ClearIndicator, MultiValueLabel }}
+          isClearable
+          isMulti
+        />
+      </div>
+      <div className="filter-item">
+        <Select
+          className="select-box"
+          classNamePrefix="select"
           value={minExperience}
-          onChange={(selectedOption) => setMinExperience(selectedOption)}
+          onChange={setMinExperience}
           options={experienceOptions}
-          placeholder="Min Experience"
+          placeholder="Experience"
+          components={{ ClearIndicator, MultiValueLabel }}
+          isClearable
         />
       </div>
       <div className="filter-item">
@@ -69,33 +102,12 @@ const Filters = ({
           className="select-box"
           classNamePrefix="select"
           value={location}
-          onChange={(selectedOption) => setLocation(selectedOption)}
+          onChange={setLocation}
           options={locationOptions}
           placeholder="Location"
-        />
-      </div>
-      <div className="filter-item">
-        <Select
-          className="select-box"
-          classNamePrefix="select"
-          value={role}
-          onChange={(selectedOption) => setRole(selectedOption)}
-          options={roleOptions}
-          placeholder="Roles"
-        />
-      </div>
-      <div className="filter-item">
-        <Select
-          className="select-box"
-          classNamePrefix="select"
-          value={remote}
-          onChange={(selectedOption) => setRemote(selectedOption.value)}
-          options={[
-            { value: 'Remote', label: 'Remote' },
-            { value: 'Hybrid', label: 'Hybrid' },
-            { value: 'office', label: 'in-Office' }
-          ]}
-          placeholder="Remote"
+          components={{ ClearIndicator, MultiValueLabel }}
+          isClearable
+          isMulti
         />
       </div>
       <div className="filter-item">
@@ -103,9 +115,11 @@ const Filters = ({
           className="select-box"
           classNamePrefix="select"
           value={minBasePay}
-          onChange={(selectedOption) => setMinBasePay(selectedOption)}
+          onChange={setMinBasePay}
           options={basePayOptions}
           placeholder="Minimum Base Pay Salary"
+          components={{ ClearIndicator, MultiValueLabel }}
+          isClearable
         />
       </div>
       <div className="filter-item">

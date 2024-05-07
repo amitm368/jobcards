@@ -12,10 +12,8 @@ function App() {
   // State variables for filtering
   const [minExperience, setMinExperience] = useState('');
   const [companyName, setCompanyName] = useState('');
-  const [location, setLocation] = useState('');
-  const [remote, setRemote] = useState(false);
-  const [techStack, setTechStack] = useState('');
-  const [role, setRole] = useState('');
+  const [location, setLocation] = useState([]);
+  const [role, setRole] = useState([]);
   const [minBasePay, setMinBasePay] = useState('');
 
   // Redux hooks
@@ -50,52 +48,45 @@ function App() {
   // Filter jobs based on user input
   const filteredJobs = jobListings.filter(job => {
     const matchExperience = !minExperience || job.minExp >= parseInt(minExperience.value);
-    const matchCompanyName = !companyName || job.companyName.toLowerCase().includes(companyName?.toLowerCase());
-    const matchLocation = !location || job.location.toLowerCase().includes(location.value.toLowerCase());
-    const matchRemote = !remote || (remote === 'Remote' ? job.location.toLowerCase() === 'remote' : remote === 'Hybrid' ? job.location.toLowerCase() !== 'remote' : true);
-    const matchTechStack = !techStack || job.techStack.toLowerCase().includes(techStack.value.toLowerCase());
-    const matchRole = !role || job.jobRole.toLowerCase().includes(role.value.toLowerCase());
+    const matchCompanyName = !companyName || job.companyName.toLowerCase().includes(companyName.toLowerCase());
+    const matchLocation = location.length === 0 || location.some(loc => job.location.toLowerCase().includes(loc.value.toLowerCase()));
+    const matchRole = role.length === 0 || role.some(rl => job.jobRole.toLowerCase().includes(rl.value.toLowerCase()));
     const matchMinBasePay = !minBasePay || parseInt(job.maxJdSalary) >= parseInt(minBasePay.value);
     
-    return matchExperience && matchCompanyName && matchLocation && matchRemote && matchTechStack && matchRole && matchMinBasePay;
+    return matchExperience && matchCompanyName && matchLocation && matchRole && matchMinBasePay;
   });
 
   return (
     <div className="App">
       <h1>Amit Mishra</h1>
       <Suspense fallback={<div>Loading...</div>}>
-        <Filters
-          minExperience={minExperience}
-          setMinExperience={setMinExperience}
-          companyName={companyName}
-          setCompanyName={setCompanyName}
-          location={location}
-          setLocation={setLocation}
-          remote={remote}
-          setRemote={setRemote}
-          techStack={techStack}
-          setTechStack={setTechStack}
-          role={role}
-          setRole={setRole}
-          minBasePay={minBasePay}
-          setMinBasePay={setMinBasePay}
-        />
-        {loading && (
-  <div>Loading...</div>
-)}
-
-{error && (
-  <div>Error: {error.message}</div>
-)}
-
-{!loading && !error && (
-  <div className="card-container">
-    {filteredJobs.map((job) => (
-      <CardComponent key={job.jdUid} job={job} />
-    ))}
-  </div>
-)}
-
+        <div className='filter-container'>
+          <Filters
+            minExperience={minExperience}
+            setMinExperience={setMinExperience}
+            companyName={companyName}
+            setCompanyName={setCompanyName}
+            location={location}
+            setLocation={setLocation}
+            role={role}
+            setRole={setRole}
+            minBasePay={minBasePay}
+            setMinBasePay={setMinBasePay}
+          />
+        </div>
+        {loading && <div>Loading...</div>}
+        {error && <div>Error: {error.message}</div>}
+        {!loading && !error && (
+          <div className="card-container">
+            {filteredJobs.length === 0 ? (
+              <div>No matching jobs found.</div>
+            ) : (
+              filteredJobs.map((job) => (
+                <CardComponent key={job.jdUid} job={job} />
+              ))
+            )}
+          </div>
+        )}
       </Suspense>
     </div>
   );

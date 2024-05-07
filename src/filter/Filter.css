@@ -1,12 +1,18 @@
 /* Filter.css */
 .filters {
     display: flex;
-    margin-left: 17px;
-    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    background-color: transparent;
+    padding: 0 20px 20px;
+    background-color: #fff !important;
+margin-left: 10px;
   }
   
   .filter-item {
     margin-right: 10px;
+    padding-bottom: 1rem;
   }
   
   /* Style for input box */
