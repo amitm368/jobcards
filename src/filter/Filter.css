@@ -1,0 +1,37 @@
+/* Filter.css */
+.filters {
+    display: flex;
+    margin-left: 17px;
+    align-items: center;
+  }
+  
+  .filter-item {
+    margin-right: 10px;
+  }
+  
+  /* Style for input box */
+  .input-box {
+    width: 240px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 16px;
+  }
+  
+  /* Style for select box */
+  .select-box {
+    width: 240px;
+    height: 36px;
+  }
+  
+  /* Style for select container */
+  .select-container {
+    width: 200px;
+  }
+  
+  /* Style for option */
+  .select-option {
+    font-size: 16px;
+  }
+  

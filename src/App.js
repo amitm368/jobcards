@@ -1,20 +1,32 @@
-import React, { useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import './App.css';
 import { selectJobListings, selectJobListingsLoading, selectJobListingsError } from './Redux/jobListing.selector';
 import { fetchJobListingsFailure, fetchJobListingsStart, fetchJobListingsSuccess } from './Redux/jobListing.slice';
-import './App.css';
 
 // Lazy load CardComponent and Filters
 const CardComponent = lazy(() => import('./card/CardComponent'));
+const Filters = lazy(() => import('./filter/Filters'));
+
 function App() {
-  //subscribe and fetch data from store
+  // State variables for filtering
+  const [minExperience, setMinExperience] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [location, setLocation] = useState('');
+  const [remote, setRemote] = useState(false);
+  const [techStack, setTechStack] = useState('');
+  const [role, setRole] = useState('');
+  const [minBasePay, setMinBasePay] = useState('');
+
+  // Redux hooks
+  const dispatch = useDispatch();
   const jobListings = useSelector(selectJobListings);
   const loading = useSelector(selectJobListingsLoading);
   const error = useSelector(selectJobListingsError);
-  const dispatch = useDispatch();
+
+  // Fetch job listings from API on component mount
   useEffect(() => {
     const fetchJobListings = async () => {
-      //set loading state
       dispatch(fetchJobListingsStart());
       try {
         const response = await fetch("https://api.weekday.technology/adhoc/getSampleJdJSON", {
@@ -26,32 +38,64 @@ function App() {
           })
         });
         const data = await response.json();
-        //set data
         dispatch(fetchJobListingsSuccess(data.jdList));
       } catch (error) {
-        //set error state
         dispatch(fetchJobListingsFailure(error));
       }
     };
-// call function to fetch data in initial render
+
     fetchJobListings();
   }, [dispatch]);
+
+  // Filter jobs based on user input
+  const filteredJobs = jobListings.filter(job => {
+    const matchExperience = !minExperience || job.minExp >= parseInt(minExperience.value);
+    const matchCompanyName = !companyName || job.companyName.toLowerCase().includes(companyName?.toLowerCase());
+    const matchLocation = !location || job.location.toLowerCase().includes(location.value.toLowerCase());
+    const matchRemote = !remote || (remote === 'Remote' ? job.location.toLowerCase() === 'remote' : remote === 'Hybrid' ? job.location.toLowerCase() !== 'remote' : true);
+    const matchTechStack = !techStack || job.techStack.toLowerCase().includes(techStack.value.toLowerCase());
+    const matchRole = !role || job.jobRole.toLowerCase().includes(role.value.toLowerCase());
+    const matchMinBasePay = !minBasePay || parseInt(job.maxJdSalary) >= parseInt(minBasePay.value);
+    
+    return matchExperience && matchCompanyName && matchLocation && matchRemote && matchTechStack && matchRole && matchMinBasePay;
+  });
+
   return (
     <div className="App">
+      <h1>Amit Mishra</h1>
       <Suspense fallback={<div>Loading...</div>}>
-        {loading ? (
-          //Loading screen during data fetch
-          <div>Loading...</div>
-        ) : error ? (
-          // error screen if any error occured during data fetch
-          <div>Error: {error.message}</div>
-        ) : (
-          <div className="card-container">
-            {jobListings.map((job) => (
-              <CardComponent key={job.jdUid} job={job} />
-            ))}
-          </div>
-        )}
+        <Filters
+          minExperience={minExperience}
+          setMinExperience={setMinExperience}
+          companyName={companyName}
+          setCompanyName={setCompanyName}
+          location={location}
+          setLocation={setLocation}
+          remote={remote}
+          setRemote={setRemote}
+          techStack={techStack}
+          setTechStack={setTechStack}
+          role={role}
+          setRole={setRole}
+          minBasePay={minBasePay}
+          setMinBasePay={setMinBasePay}
+        />
+        {loading && (
+  <div>Loading...</div>
+)}
+
+{error && (
+  <div>Error: {error.message}</div>
+)}
+
+{!loading && !error && (
+  <div className="card-container">
+    {filteredJobs.map((job) => (
+      <CardComponent key={job.jdUid} job={job} />
+    ))}
+  </div>
+)}
+
       </Suspense>
     </div>
   );
