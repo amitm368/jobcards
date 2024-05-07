@@ -52,8 +52,6 @@ const Description = (jobId) => {
         <>
           <div className="about-company">
             <h3>About Company:</h3>
-            {/* Assuming aboutCompany is not in the store */}
-            <p></p>
           </div>
           <div className="about-role">
             <h3>About Role:</h3>

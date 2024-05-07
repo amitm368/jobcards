@@ -1,5 +1,6 @@
-/* Filter.css */
+@import url('https://fonts.googleapis.com/css2?family=Lexend&display=swap');
 .filters {
+    font-family: LexendFont_7838d2, LexendFont_Fallback_7838d2;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

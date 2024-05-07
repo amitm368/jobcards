@@ -18,12 +18,12 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 0 20px; /* Add padding to maintain space on the sides */
+  padding: 0 20px; 
 }
 
 .card-body {
   width: calc(33.33% - 40px); /* Adjust for margins */
-  margin-bottom: 20px; /* Add some bottom margin for spacing */
+  margin-bottom: 20px; 
 }
 
 @media screen and (max-width: 1200px) {
