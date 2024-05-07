@@ -1,6 +1,6 @@
 import React from 'react';
 import Select, { components } from 'react-select';
-import { FiX } from 'react-icons/fi'; // Import the close icon
+import { FiX } from 'react-icons/fi';
 import './Filter.css';
 
 const ClearIndicator = props => {
@@ -38,7 +38,7 @@ const Filters = ({
 }) => {
 
   const experienceOptions = [
-    { value: '', label: 'Min Experience' },
+
     { value: '1', label: '1 years' },
     { value: '3', label: '3 years' },
     { value: '5', label: '5 years' },
@@ -46,7 +46,6 @@ const Filters = ({
   ];
 
   const locationOptions = [
-    { value: '', label: 'Location' },
     { value: 'Mumbai', label: 'Mumbai' },
     { value: 'Delhi NCR', label: 'Delhi NCR' },
     { value: 'Chennai', label: 'Chennai' },
@@ -54,7 +53,6 @@ const Filters = ({
   ];
 
   const roleOptions = [
-    { value: '', label: 'Roles' },
     { value: 'ios', label: 'iOS Developer' },
     { value: 'android', label: 'Android Developer' },
     { value: 'frontend', label: 'Frontend Developer' },
@@ -62,7 +60,7 @@ const Filters = ({
   ];
 
   const basePayOptions = [
-    { value: '', label: '0' },
+    { value: '1', label: '$1' },
     { value: '10', label: '$10' },
     { value: '50', label: '$50' },
     { value: '110', label: '$110' },
