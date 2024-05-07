@@ -7,6 +7,10 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
+  .buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+}
   .referral-btn {
     background: none;
     border: none;
@@ -124,7 +128,7 @@
     /* margin-top: 20px; */
   }
   
-  .buttons button {
+  .buttons button, .buttons>a {
     margin-bottom: 10px;
   }
   .info-container {
@@ -147,7 +151,7 @@
     line-height: 21px;
   }
   
-  .apply-btn,
+  .apply-btn, .button-link,
   .referral-btn {
     padding: 10px 20px;
     border: none;
@@ -157,12 +161,11 @@
     transition: background-color 0.3s ease;
   }
   
-  .apply-btn {
+  .apply-btn, .button-link {
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 28px;
-  
     background-color: rgb(85, 239, 196);
     color: #000000;
   }

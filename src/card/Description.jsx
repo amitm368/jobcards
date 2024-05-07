@@ -1,11 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Description.css';
+import { useSelector } from 'react-redux';
+import { selectJobDetails } from '../Redux/jobListing.selector';
 
-const Description = ({ aboutCompany, aboutRole }) => {
+const Description = (jobId) => {
   const [showPopup, setShowPopup] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
-  const [description, setDescription] = useState('')
+  const [description, setDescription] = useState('');
   const popupRef = useRef(null);
+  const aboutRole = useSelector(selectJobDetails(jobId));
 
   const togglePopup = () => {
     setShowPopup(!showPopup);
@@ -17,21 +20,18 @@ const Description = ({ aboutCompany, aboutRole }) => {
         setShowPopup(false);
       }
     };
-// on click of outside of popup close the popup
+
     window.addEventListener('mousedown', handleClickOutside);
-//cleanup function
+
     return () => {
       window.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
   useEffect(() => {
-    // show popup if description is more than 60 words
-    const combinedDescription =
-      aboutCompany + ' ' + aboutRole.map((item) => item.content).join(' ');
-    setIsOverflowing(combinedDescription.split(' ').length > 60);
-    setDescription(combinedDescription.split(' ').slice(0, 60).join(' '));
-  }, [aboutCompany, aboutRole]);
+      setIsOverflowing(aboutRole.jobDetailsFromCompany.split(' ').length > 120);
+      setDescription(aboutRole.jobDetailsFromCompany.split(' ').slice(0, 120).join(' '));
+  }, [aboutRole]);
 
   return (
     <div className="description">
@@ -40,15 +40,11 @@ const Description = ({ aboutCompany, aboutRole }) => {
           <div className="popup-content" ref={popupRef}>
             <h3 className="popup-heading">Job Description</h3>
             <div className="popup-description">
-              <h3>About Company:</h3>
-              <p>{aboutCompany}</p>
-              <h3>About Role:</h3>
-              {aboutRole.map((item, index) => (
-                <div key={index}>
-                  <h4>{item.heading}</h4>
-                  <p>{item.content}</p>
-                </div>
-              ))}
+                
+                  <h3>About Role:</h3>
+                  <p>{description}</p>
+                
+              
             </div>
           </div>
         </div>
@@ -56,7 +52,8 @@ const Description = ({ aboutCompany, aboutRole }) => {
         <>
           <div className="about-company">
             <h3>About Company:</h3>
-            <p>{aboutCompany}</p>
+            {/* Assuming aboutCompany is not in the store */}
+            <p></p>
           </div>
           <div className="about-role">
             <h3>About Role:</h3>
@@ -68,9 +65,11 @@ const Description = ({ aboutCompany, aboutRole }) => {
         <button className="view-more-btn" onClick={togglePopup}>
           View More
         </button>
-      ): (<button className='view-job-btn' onClick={togglePopup}>
-        View Job
-        </button>)}
+      ) : (
+        <button className='view-job-btn' onClick={togglePopup}>
+          View Job
+        </button>
+      )}
     </div>
   );
 };
