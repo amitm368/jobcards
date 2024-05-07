@@ -60,8 +60,8 @@
   }
   
   .company-logo img {
-    width: 100px;
-    height: auto;
+    width: calc(0.30);
+    height: 50px;
     margin-right: 20px;
   }
   
@@ -158,17 +158,21 @@
   }
   
   .apply-btn {
-    background-color: #007bff;
-    color: #fff;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 28px;
+  
+    background-color: rgb(85, 239, 196);
+    color: #000000;
   }
   
   .referral-btn {
-    background-color: #28a745;
+    background-color: #2c2ed4;
     color: #fff;
   }
   
-  .referral-btn:hover,
-  .apply-btn:hover {
+  .referral-btn:hover {
     background-color: #0056b3;
   }
  
